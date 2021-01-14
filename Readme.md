@@ -1,5 +1,7 @@
 # This project is built using the Slim Microframework
 
+Upon cloning, run `composer install` to download all dependencies.
+
 If serving with Apache, make sure the mod_rewrite module is enabled.
 
 Edit the configuration variables in the /configs directory. It is recommended
