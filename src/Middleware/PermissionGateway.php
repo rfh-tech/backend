@@ -28,14 +28,14 @@ class PermissionGateway implements \EmmetBlueMiddleware\MiddlewareInterface
 
 	protected static function isUserLoggedIn($userId, $sessionId, $userToken)
 	{
-		$isTokenValid = \KuboPlugin\User\UserSession\Session::isTokenValid($userId, ["sessionId"=>$sessionId, "token"=>$userToken]);
+		$isTokenValid = \RFHApi\User\UserSession\Session::isTokenValid($userId, ["sessionId"=>$sessionId, "token"=>$userToken]);
 
 		return $isTokenValid["status"];
 	}
 
 	protected static function isUserPermitted($userId, $sessionId, $endpoint)
 	{
-		$session = \KuboPlugin\User\UserSession\Session::load((int)$userId, (int)$sessionId);
+		$session = \RFHApi\User\UserSession\Session::load((int)$userId, (int)$sessionId);
 		$accountType = $session[0]["AccountTypeName"];
 
 		if (is_null($accountType)){
@@ -47,7 +47,7 @@ class PermissionGateway implements \EmmetBlueMiddleware\MiddlewareInterface
 			"endpoint"=>$endpoint
 		];
 
-		$isUserPermitted = \KuboPlugin\User\UserPermission\Acl::checkPermission($userId, $requestData);
+		$isUserPermitted = \RFHApi\User\UserPermission\Acl::checkPermission($userId, $requestData);
 
 		return $isUserPermitted["status"];
 	}
