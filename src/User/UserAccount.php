@@ -2,7 +2,7 @@
 /**
  * Visitor Class.
  *
- * This file is part of Project Kubo, please read the documentation
+ * This file is part of RFHubAPI, please read the documentation
  * available in the root level of this project
  *
  * @license MIT
