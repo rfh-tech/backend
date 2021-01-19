@@ -1,6 +1,6 @@
 <?php declare (strict_types=1);
 
-Namespace KuboPlugin\User\UserAccount;
+Namespace RFHAPI\User\UserAccount;
 
 use EmmetBlue\Core\Factory\DatabaseConnectionFactory as DBConnectionFactory;
 use EmmetBlue\Core\Factory\DatabaseQueryFactory as DBQueryFactory;

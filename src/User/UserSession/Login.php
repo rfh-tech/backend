@@ -10,7 +10,7 @@
  *
  */
 
-namespace KuboPlugin\User\UserSession;
+namespace RFHAPI\User\UserSession;
 
 use EmmetBlue\Core\Factory\DatabaseConnectionFactory as DBConnectionFactory;
 use EmmetBlue\Core\Factory\DatabaseQueryFactory as DBQueryFactory;
