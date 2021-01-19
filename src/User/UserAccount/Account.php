@@ -22,7 +22,7 @@ use EmmetBlue\Core\Builder\QueryBuilder\QueryBuilder as QB;
  * User Account Controller
  *
  * @author Samuel Adeshina <samueladeshina73@gmail.com>
- * @since v0.0.1 18/09/2020 02:37
+ * @since v0.0.1 17/01/2021 02:37
  */
 class Account {
 
@@ -78,18 +78,5 @@ class Account {
 		$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
 		return $result[0]["UserId"] ?? -1;
-	}
-	
-	public static function updateKycGroup(int $userId){
-		$currGroup = UserKyc::determineKycGroup($userId)["GroupId"];
-
-		$result = -1;
-
-		if ($currGroup != 0){
-			$query = "UPDATE Users.Account SET KycGroupId = $currGroup, LastModified = CURRENT_TIMESTAMP WHERE UserId = $userId";
-			$result = DBConnectionFactory::getConnection()->exec($query);
-		}
-
-		return ["status"=>$result];
 	}
 }

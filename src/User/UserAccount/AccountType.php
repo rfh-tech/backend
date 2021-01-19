@@ -22,7 +22,7 @@ use EmmetBlue\Core\Builder\QueryBuilder\QueryBuilder as QB;
  * User Account Type Controller
  *
  * @author Samuel Adeshina <samueladeshina73@gmail.com>
- * @since v0.0.1 18/09/2020 02:52
+ * @since v0.0.1 17/01/2021 02:52
  */
 class AccountType {
 	

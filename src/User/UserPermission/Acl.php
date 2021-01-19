@@ -23,7 +23,7 @@ use Samshal\Acl\Acl as AclManager;
  * Acl Controller
  *
  * @author Samuel Adeshina <samueladeshina73@gmail.com>
- * @since v0.0.1 25/10/2020 18:11
+ * @since v0.0.1 17/01/2021 18:11
  */
 class Acl
 {

@@ -22,7 +22,7 @@ use EmmetBlue\Core\Builder\QueryBuilder\QueryBuilder as QB;
  * Session Controller
  *
  * @author Samuel Adeshina <samueladeshina73@gmail.com>
- * @since v0.0.1 22/10/2020 19:35
+ * @since v0.0.1 17/01/2021 19:35
  */
 class Login
 {
