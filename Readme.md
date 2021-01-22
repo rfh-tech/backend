@@ -10,3 +10,9 @@ file to reflect the new location to avoid accidentally commiting them.
 
 You can access the routes as defined in the index.php file and also on the postman workspace for this project.
 All endpoints are versioned as /v1/... 
+
+# INSTALL DB
+
+Import the sql scripts using mysql source command
+
+    source '<project_absolute_path>/schema/index.sql'
