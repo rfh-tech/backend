@@ -1,6 +1,6 @@
 # This project is built using the Slim Microframework
 
-Upon cloning, run `composer install` to download all dependencies.
+Upon cloning, run `composer install` to download and install all dependencies.
 
 If serving with Apache, make sure the mod_rewrite module is enabled.
 
@@ -31,6 +31,8 @@ the modules located in `/src`.
 
 As an example to access the endpoint for bootstrapping a new user account, the following
 route will be posted to.
+    `
     /v1/user/user-account/new-account
+    `
 
 `newAccount` is a method in the `UserAccount` class of the `User` module (namespace).
