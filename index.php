@@ -19,7 +19,7 @@ $app = new \Slim\App($settings);
 $app->post('/{version}/login', function($request, $response, $args){
 	$data = $request->getParsedBody();
 
-	$pluginResponse = []; //determine from login controller
+	$pluginResponse = RFHApi\User\UserSession::login($data);
 
 	if (isset($pluginResponse["status"]) && $pluginResponse["status"]){
 
@@ -69,7 +69,7 @@ $app->group('/', function(){
 			
 			$globalResponse = array_replace_recursive(
 				$globalResponseFormat, 
-				EmmetBlueMiddleware\Middleware::processor($options, "")
+				EmmetBlueMiddleware\Middleware::processor($options, "RFHApi")
 			);
 
 			return $response->withJson($globalResponse["body"], $globalResponse["status"]);

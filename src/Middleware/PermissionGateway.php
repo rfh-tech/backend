@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
+namespace RFHApi\Middleware;
+
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 use EmmetBlue\Core\Constant;
-
-namespace RFHApi\Middleware;
 
 class PermissionGateway implements \EmmetBlueMiddleware\MiddlewareInterface
 {
@@ -58,7 +58,7 @@ class PermissionGateway implements \EmmetBlueMiddleware\MiddlewareInterface
 		{
 			$args = $request->getAttribute('routeInfo')[2];
 
-			if (!isset($args["resourceId"])){
+			if (!isset($args["resourceId"]) && (!is_null($request->getServerParams()["QUERY_STRING"]))){
 				$qs = explode("&",$request->getServerParams()["QUERY_STRING"]);
 				foreach($qs as $string){
 					$explode = explode("=",$string);

@@ -14,7 +14,9 @@ namespace RFHAPI\User\UserSession;
 
 use EmmetBlue\Core\Factory\DatabaseConnectionFactory as DBConnectionFactory;
 use EmmetBlue\Core\Factory\DatabaseQueryFactory as DBQueryFactory;
+use EmmetBlue\Core\Exception\SQLException as SQLException;
 use EmmetBlue\Core\Builder\QueryBuilder\QueryBuilder as QB;
+
 
 /**
  * class Login.
@@ -34,7 +36,7 @@ class Login
      */
     public static function isLoginDataValid($username, $password)
     {
-        $query = "SELECT PasswordHash FROM Users.Account WHERE UserEmail='$username'";
+        $query = "SELECT PasswordHash FROM Users_Account WHERE UserEmail='$username'";
 
         try
         {
@@ -50,9 +52,11 @@ class Login
         }
         catch (\PDOException $e)
         {
+            
             throw new SQLException(sprintf(
-                "Unable to validate login data"
-            ), Constant::UNDEFINED);
+                "Unable to validate login data. Error returned by server: %s",
+                $e->getMessage()
+            ), \EmmetBlue\Core\Constant::UNDEFINED);
         }
 
         return false;

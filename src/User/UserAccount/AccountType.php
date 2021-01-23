@@ -35,7 +35,7 @@ class AccountType {
      * @return array
      */
 	public static function addAccountType(int $userId, int $accountType){
-		$result = DBQueryFactory::insert("Users.UserAccountType", [
+		$result = DBQueryFactory::insert("Users_UserAccountType", [
 			"UserId"=>$userId,
 			"AccountType"=>$accountType
 		]);
@@ -51,7 +51,7 @@ class AccountType {
      * @return array
      */
 	public static function viewAccountTypes(int $userId){
-		$query = "SELECT a.*, b.TypeName, b.TypeDescription FROM Users.UserAccountType a INNER JOIN Users.AccountTypes b ON a.AccountType = b.TypeId WHERE a.UserId = $userId";
+		$query = "SELECT a.*, b.TypeName, b.TypeDescription FROM Users_UserAccountType a INNER JOIN Users_AccountTypes b ON a.AccountType = b.TypeId WHERE a.UserId = $userId";
 		$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
 		return $result;

@@ -37,7 +37,7 @@ class Account {
 	public static function newAccount(string $email, string $password){
 		$passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-		$result = DBQueryFactory::insert("Users.Account", [
+		$result = DBQueryFactory::insert("Users_Account", [
 			"UserEmail"=>QB::wrapString($email, "'"),
 			"PasswordHash"=>QB::wrapString($passwordHash, "'")
 		]);
@@ -60,21 +60,21 @@ class Account {
      * @return bool
      */
 	public static function checkAccountExistsByEmail(string $email){
-		$query = "SELECT UserId FROM Users.Account WHERE UserEmail = '$email'";
+		$query = "SELECT UserId FROM Users_Account WHERE UserEmail = '$email'";
 		$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
 		return count($result) == 1;
 	}
 
 	public static function checkAccountExistsById(int $accountId){
-		$query = "SELECT UserId FROM Users.Account WHERE UserId = $accountId";
+		$query = "SELECT UserId FROM Users_Account WHERE UserId = $accountId";
 		$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
 		return count($result) == 1;
 	}
 
 	public static function getUserId(string $email){
-		$query = "SELECT UserId FROM Users.Account WHERE UserEmail = '$email';";
+		$query = "SELECT UserId FROM Users_Account WHERE UserEmail = '$email';";
 		$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
 		return $result[0]["UserId"] ?? -1;
