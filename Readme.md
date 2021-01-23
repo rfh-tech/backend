@@ -16,3 +16,21 @@ All endpoints are versioned as /v1/...
 Import the sql scripts using mysql source command
 
     source '<project_absolute_path>/schema/index.sql'
+
+# Consuming the Endpoints
+
+The following dynamic route has been configured in `index.php` 
+
+    $app->group('/', function(){
+	$this->map(
+		['GET', 'POST', 'PUT', 'DELETE'],
+		'{version}/{module}/{resource}/{action}[/{resourceId}]',
+
+As seen from the above snippet, the endpoints are methods within classes within
+the modules located in `/src`.
+
+As an example to access the endpoint for bootstrapping a new user account, the following
+route will be posted to.
+    /v1/user/user-account/new-account
+
+`newAccount` is a method in the `UserAccount` class of the `User` module (namespace).
