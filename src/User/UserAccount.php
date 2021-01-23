@@ -43,7 +43,8 @@ class UserAccount {
 				$result = UserAccount\Account::newAccount($data["email"], $data["password"]);
 				if ($result["lastInsertId"]){
 					$accountId = $result["lastInsertId"];
-					$setType = UserAccount\AccountType::addAccountType((int)$accountId, (int)$data["accountType"]);
+					$accountType = $data["accountType"];
+					$setType = UserAccount\AccountType::addAccountType((int)$accountId, (int)$accountType);
 
 					$return_result = ["status"=>true, "accountDetails"=>["id"=>$accountId]];
 				}	

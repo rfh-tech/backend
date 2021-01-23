@@ -40,12 +40,12 @@ class Account {
 		$result = DBQueryFactory::insert("Users_Account", [
 			"UserEmail"=>QB::wrapString($email, "'"),
 			"PasswordHash"=>QB::wrapString($passwordHash, "'")
-		]);
+		], false);
 
 		if (!$result['lastInsertId']){
 			//throw an exception, insert was unsuccessful
 		}	
-
+		
 		return $result;
 	}
 

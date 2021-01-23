@@ -392,12 +392,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Samshal/Emmet-Blue.git",
-                "reference": "fa5b9e6a15df271b50ef2bc7626c22d6b38506de"
+                "reference": "01b7da852c7febade1271c7bce91055a9b875444"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Samshal/Emmet-Blue/zipball/fa5b9e6a15df271b50ef2bc7626c22d6b38506de",
-                "reference": "fa5b9e6a15df271b50ef2bc7626c22d6b38506de",
+                "url": "https://api.github.com/repos/Samshal/Emmet-Blue/zipball/01b7da852c7febade1271c7bce91055a9b875444",
+                "reference": "01b7da852c7febade1271c7bce91055a9b875444",
                 "shasum": ""
             },
             "require": {
@@ -425,7 +425,7 @@
             "support": {
                 "source": "https://github.com/Samshal/Emmet-Blue/tree/master"
             },
-            "time": "2020-09-27T01:33:44+00:00"
+            "time": "2021-01-23T08:11:58+00:00"
         },
         {
             "name": "samshal/emmet-blue-middeware",
