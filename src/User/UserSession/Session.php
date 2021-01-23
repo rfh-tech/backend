@@ -28,7 +28,7 @@ class Session
 {
 	public static function load(int $userId, int $sessionId)
 	{
-		$query = "SELECT a.*, b.TypeName as AccountTypeName FROM Users.UserSession a INNER JOIN Users.AccountTypes b ON a.AccountTypeId = b.TypeId WHERE a.UserId=$userId AND a.SessionId=$sessionId;";
+		$query = "SELECT a.*, b.TypeName as AccountTypeName FROM Users_UserSession a INNER JOIN Users_AccountTypes b ON a.AccountTypeId = b.TypeId WHERE a.UserId=$userId AND a.SessionId=$sessionId;";
 		$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
 		if (count($result) == 1){
@@ -39,7 +39,7 @@ class Session
 	}
 
 	public static function retrieveDecodedSession(int $userId, int $sessionId, bool $onlyActiveSession=false){
-		$query = "SELECT Session FROM Users.UserSession WHERE UserId=$userId AND SessionId=$sessionId";
+		$query = "SELECT Session FROM Users_UserSession WHERE UserId=$userId AND SessionId=$sessionId";
 		$query = $onlyActiveSession ? $query." AND Status=1;" : $query;
 
 		$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
@@ -50,7 +50,7 @@ class Session
 	}
 
 	public static function getActiveSessions(int $userId){
-		$query = "SELECT * FROM Users.UserSession WHERE UserId=$userId AND Status=1 ORDER BY DateCreated DESC;";
+		$query = "SELECT * FROM Users_UserSession WHERE UserId=$userId AND Status=1 ORDER BY DateCreated DESC;";
 		$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
 		return $result;
@@ -61,10 +61,10 @@ class Session
 		$serializedSession = serialize($sessionData);
 		$encodedSessionString = base64_encode($serializedSession);
 
-		$result = DBQueryFactory::insert("Users.UserSession", [
+		$result = DBQueryFactory::insert("Users_UserSession", [
 			"UserId"=>$userId,
 			"Session"=>QB::wrapString($encodedSessionString, "'")
-		]);
+		], false);
 
 		if (!$result['lastInsertId']){
 			//throw an exception, insert was unsuccessful
@@ -78,25 +78,25 @@ class Session
 		$accountType = (int) $data["accountType"] ?? 0;
 
 		if ($accountType == 0){
-			$query = "SELECT TOP 1 AccountType FROM Users.UserAccountType WHERE UserId=$resourceId ORDER BY DateCreated ASC;";
+			$query = "SELECT TOP 1 AccountType FROM Users_UserAccountType WHERE UserId=$resourceId ORDER BY DateCreated ASC;";
 			$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
 			$accountType = $result[0]["AccountType"] ?? 0;
 		}
 
-		$query = "UPDATE Users.UserSession SET Status=1, AccountTypeId = $accountType, LastModified=CURRENT_TIMESTAMP WHERE UserId=$resourceId AND SessionId=$sessionId;";
+		$query = "UPDATE Users_UserSession SET Status=1, AccountTypeId = $accountType, LastModified=CURRENT_TIMESTAMP WHERE UserId=$resourceId AND SessionId=$sessionId;";
 
 		return ["status"=>DBConnectionFactory::getConnection()->exec($query)];
 	}
 
 	public static function deactivate(int $resourceId, int $sessionId){
-		$query = "UPDATE Users.UserSession SET Status=0, LastModified=CURRENT_TIMESTAMP WHERE UserId=$resourceId AND SessionId=$sessionId;";
+		$query = "UPDATE Users_UserSession SET Status=0, LastModified=CURRENT_TIMESTAMP WHERE UserId=$resourceId AND SessionId=$sessionId;";
 
 		return ["status"=>DBConnectionFactory::getConnection()->exec($query)];
 	}	
 
 	public static function deactivateAll(int $resourceId){
-		$query = "UPDATE Users.UserSession SET Status=0, LastModified=CURRENT_TIMESTAMP WHERE UserId=$resourceId;";
+		$query = "UPDATE Users_UserSession SET Status=0, LastModified=CURRENT_TIMESTAMP WHERE UserId=$resourceId;";
 
 		return ["status"=>DBConnectionFactory::getConnection()->exec($query)];
 	}
