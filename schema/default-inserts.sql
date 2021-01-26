@@ -15,12 +15,3 @@ INSERT INTO SpatialEntities_EntityTypes (SpatialEntityTypeName, AdminLevel) VALU
 ('City', 2),
 ('Village', 3),
 ('Farm', 4)
-
-
-Spatial_Entity
-Admin_Level
-
-Farms
-Villages
-States
-Partners

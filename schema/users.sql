@@ -39,6 +39,7 @@ CREATE TABLE Users_Account (
 	UserEmail VARCHAR(50) NOT NULL UNIQUE,
 	PasswordHash LONGTEXT,
 	KycGroupId INT,
+	AccountName VARCHAR(256),
 	LastModified DATETIME,
 	DateCreated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

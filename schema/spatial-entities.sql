@@ -12,15 +12,49 @@ CREATE TABLE SpatialEntities_EntityTypes (
 	SpatialEntityTypeDescription VARCHAR(500)
 );
 
+CREATE TABLE SpatialEntities_MetadataFieldTypes (
+	TypeName VARCHAR(50) NOT NULL PRIMARY KEY,
+	TypeDescription VARCHAR(500)
+);
+
+CREATE TABLE SpatialEntities_MetadataFields (
+	FieldId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	FieldType VARCHAR(50) NOT NULL,
+	FieldName VARCHAR(50) NOT NULL UNIQUE,
+	FieldDescription VARCHAR(500),
+
+	CONSTRAINT fk_MetadataFields_SpatialEntities_MetadataFieldTypes
+		FOREIGN KEY (FieldType) REFERENCES SpatialEntities_MetadataFieldTypes (TypeName) ON UPDATE CASCADE ON DELETE NO ACTION
+);
+
 CREATE TABLE SpatialEntities_Entities (
 	EntityId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	EntityName VARCHAR(256),
-	EntityType INT,
+	EntityType INT NOT NULL,
+	EntityParent INT,
 	EntityGeometry GEOMETRY,
 	EntityDescription VARCHAR(500),
 	DateCreated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	LastModified DATETIME,
 
 	CONSTRAINT fk_Entities_SpatialEntities_EntityTypes_SpatialEntityTypeId
-		FOREIGN KEY (EntityId) REFERENCES SpatialEntities_EntityTypes (SpatialEntityTypeId) ON UPDATE CASCADE ON DELETE CASCADE
+		FOREIGN KEY (EntityId) REFERENCES SpatialEntities_EntityTypes (SpatialEntityTypeId) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT fk_Entities_SpatialEntities_Entities_SpatialEntities_EntityId
+		FOREIGN KEY (EntityParent) REFERENCES SpatialEntities_Entities (EntityId) ON UPDATE CASCADE ON DELETE SET NULL
 );
+
+CREATE TABLE SpatialEntities_EntityMetadata (
+	MetadataId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	EntityId INT NOT NULL,
+	FieldId INT NOT NULL,
+	FieldValue VARCHAR(256),
+	DateCreated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	LastModified DATETIME,
+	
+	CONSTRAINT u_EntityMetadata_EntityId_FieldId
+		UNIQUE(EntityId, FieldId),
+	CONSTRAINT fk_EntityMetadata_SpatialEntities_Entities_EntityId
+		FOREIGN KEY (EntityId) REFERENCES SpatialEntities_Entities (EntityId) ON UPDATE CASCADE ON DELETE CASCADE
+	CONSTRAINT fk_EntityMetadata_SpatialEntities_MetadataFields_FieldId
+		FOREIGN KEY (FieldId) REFERENCES SpatialEntities_MetadataFields (FieldId) ON UPDATE CASCADE ON DELETE CASCADE 
+)
