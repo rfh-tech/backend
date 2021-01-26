@@ -1,7 +1,3 @@
-DROP SCHEMA IF EXISTS RFHApiDB;
-
-CREATE DATABASE RFHApiDB;
-
 USE RFHApiDB;
 
 
@@ -88,7 +84,8 @@ CREATE TABLE Users_UserAccountType (
 		FOREIGN KEY (AccountType) REFERENCES Users_AccountTypes (TypeId) ON UPDATE CASCADE ON DELETE CASCADE		 
 );
 
-
+-- For hierarchical linking of accounts.
+-- Admin -> Supervisors -> Farmers, etc.
 CREATE TABLE Users_LinkedAccounts (
 	LinkedAccountId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	UserId INT NOT NULL,
