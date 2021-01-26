@@ -8,7 +8,7 @@ USE RFHApiDB;
 CREATE TABLE SpatialEntities_EntityTypes (
 	SpatialEntityTypeId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	SpatialEntityTypeName VARCHAR(50) NOT NULL UNIQUE,
-	AdminLevel TINYINT NOT NULL DEFAULT 256,
+	AdminLevel SMALLINT NOT NULL DEFAULT 256,
 	SpatialEntityTypeDescription VARCHAR(500)
 );
 
@@ -54,7 +54,7 @@ CREATE TABLE SpatialEntities_EntityMetadata (
 	CONSTRAINT u_EntityMetadata_EntityId_FieldId
 		UNIQUE(EntityId, FieldId),
 	CONSTRAINT fk_EntityMetadata_SpatialEntities_Entities_EntityId
-		FOREIGN KEY (EntityId) REFERENCES SpatialEntities_Entities (EntityId) ON UPDATE CASCADE ON DELETE CASCADE
+		FOREIGN KEY (EntityId) REFERENCES SpatialEntities_Entities (EntityId) ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT fk_EntityMetadata_SpatialEntities_MetadataFields_FieldId
 		FOREIGN KEY (FieldId) REFERENCES SpatialEntities_MetadataFields (FieldId) ON UPDATE CASCADE ON DELETE CASCADE 
-)
+);
