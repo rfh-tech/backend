@@ -38,9 +38,9 @@ class Entity {
 		$return_result = ["status"=>false, "reason"=>"Invalid data provided"];
 
 		if (isset($data["metadata"])){
-			if (Entity\EntityMetadata::newMetadata($data["metadata"])){	
+			if (Entity\Entity::newEntity($data)){	
 		        $return_result = ["status"=>false, "reason"=>"Unable to create entity"];			
-				$result = Entity\Entity::newEntity($data);
+				$result = Entity\EntityMetadata::newMetadata($data["metadata"]);
 				if ($result["lastInsertId"]){
 					$return_result = $result;
 				}	

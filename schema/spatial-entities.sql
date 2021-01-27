@@ -32,7 +32,7 @@ CREATE TABLE SpatialEntities_Entities (
 	EntityName VARCHAR(256),
 	EntityType INT NOT NULL,
 	EntityParent INT,
-	EntityGeometry GEOMETRY,
+	EntityGeometry GEOMETRY SRID 0,
 	EntityDescription VARCHAR(500),
 	DateCreated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	LastModified DATETIME,

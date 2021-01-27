@@ -78,7 +78,7 @@ class Session
 		$accountType = (int) $data["accountType"] ?? 0;
 
 		if ($accountType == 0){
-			$query = "SELECT TOP 1 AccountType FROM Users_UserAccountType WHERE UserId=$resourceId ORDER BY DateCreated ASC;";
+			$query = "SELECT AccountType FROM Users_UserAccountType WHERE UserId=$resourceId ORDER BY DateCreated ASC LIMIT 1;";
 			$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
 			$accountType = $result[0]["AccountType"] ?? 0;

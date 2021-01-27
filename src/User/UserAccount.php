@@ -86,4 +86,54 @@ class UserAccount {
 
 	public function removeAccountType(int $resourceId, array $data){
 	}
+
+	public function addLinkedAccount(int $resourceId, array $data){
+		$accountExists = UserAccount\Account::checkAccountExistsById((int)$data["accountId"]);
+		$result = ["status"=>false, "reason"=>"Invalid user account link requested"];
+
+		if ($accountExists && $resourceId !== (int)$data["accountId"]){
+			$result = ["status"=>false, "reason"=>"Unable to link specified user accounts"];
+			$addLink = UserAccount\LinkedAccount::addLinkToAccount($resourceId, (int)$data["accountId"]);
+			
+			if ($addLink["lastInsertId"]){
+				$result = ["status"=>true];
+			}	
+		}
+		
+		return $result;
+	}
+
+	public function viewLinkedUsers(int $resourceId){
+		return UserAccount\LinkedAccount::viewLinkedUsers($resourceId);	
+	}
+
+	public function viewLinkedAccounts(int $resourceId){
+		return UserAccount\LinkedAccount::viewLinkedAccounts($resourceId);	
+	}
+
+	public function removeLinkedAccount(int $resourceId, array $data){
+	}
+
+	public function resetKycGroup(int $resourceId){
+		return UserAccount\Account::updateKycGroup($resourceId);
+	}
+
+	public function addKyc(int $resourceId, array $data){
+		return UserAccount\UserKyc::addKycStatus($resourceId, $data);
+	}
+
+	public function viewKycStatus(int $resourceId, array $data = []){
+		if (empty($data)){
+			$result = UserAccount\UserKyc::viewStatus($resourceId);
+		}
+		else {
+			$result = UserAccount\UserKyc::viewStatus($resourceId, $data);	
+		}
+
+		return $result;
+	}
+
+	public function updateKycStatus(int $resourceId, array $data){
+		return UserAccount\UserKyc::updateKycStatus($resourceId, $data);
+	}
 }

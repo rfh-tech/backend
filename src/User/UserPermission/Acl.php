@@ -31,7 +31,7 @@ class Acl
 
     public static function load(string $kycGroup, string $accountType)
     {
-        $query = "SELECT * FROM Users.AclEndPointRules WHERE (AccountType='$accountType' OR AccountType IS NULL) AND (KycGroup='$kycGroup' OR KycGroup IS NULL) ORDER BY AccountType DESC;";
+        $query = "SELECT * FROM Users_AclEndPointRules WHERE (AccountType='$accountType' OR AccountType IS NULL) AND (KycGroup='$kycGroup' OR KycGroup IS NULL) ORDER BY AccountType DESC;";
 
         $result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -68,7 +68,7 @@ class Acl
     public static function checkPermission(int $userId, array $data){
         $permission = ["status"=>false];
 
-        $query = "SELECT b.GroupName FROM Users.Account a INNER JOIN Users.KycTypeGroups b ON a.KycGroupId = b.GroupId WHERE a.UserId=$userId";
+        $query = "SELECT b.GroupName FROM Users_Account a INNER JOIN Users_KycTypeGroups b ON a.KycGroupId = b.GroupId WHERE a.UserId=$userId";
         $result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
         if (!isset($result[0]["GroupName"])){

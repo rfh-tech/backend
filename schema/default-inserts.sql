@@ -9,6 +9,14 @@ INSERT INTO Users_AccountTypes (TypeName) VALUES
 ('Farmer'), 
 ('Merchant');
 
+INSERT INTO Users_KycTypeGroups (GroupName, Priority) VALUES ('level_0', 0), ('level_1', 1), ('level_2', 2);
+
+INSERT INTO Users_KycTypes (GroupId, TypeName) VALUES (1, 'email'), (2, 'phone_number');
+
+INSERT INTO Users_KycStatusTypes (TypeName) VALUES ('unverified'), ('in_progress'), ('verified');
+
+INSERT INTO Users_AclEndPointRules (EndPoint) VALUES ('user__user_account__new_account');
+
 INSERT INTO SpatialEntities_EntityTypes (SpatialEntityTypeName, AdminLevel) VALUES
 ('Country', 0),
 ('State', 1),

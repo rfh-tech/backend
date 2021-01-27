@@ -30,17 +30,22 @@ class Entity {
 	public function newEntity(array $data){
         $name = $data["entityName"];
         $type = $data["entityType"];
-        $parent = $data["entityParent"];
-        $geometry = $data["entityGeometry"];
+        $parentId = $data["entityParentId"] ?? null;
+        $geometry = $data["entityGeometry"] ?? null;
         $description = $data["description"] ?? null;
 
-        $result = DBQueryFactory::insert("SpatialEntities_Entities", [
+        $inputData = [
             "EntityName"=>QB::wrapString($name, "'"),
             "EntityType"=>QB::wrapString($type, "'"),
-            "EntityParent"=>QB::wrapString($parent, "'"),
-            "EntityGeometry"=>QB::wrapString($geometry, "'"),
+            "EntityParent"=>$parentId,
             "EntityDescription"=>QB::wrapString($description, "'")
-        ], false);
+        ];
+
+        if (!is_null($geometry)){
+            $inputData["EntityGeometry"] = QB::wrapString($geometry);
+        }
+
+        $result = DBQueryFactory::insert("SpatialEntities_Entities", $inputData, false);
 
         if (!$result['lastInsertId']){
 			//throw an exception, insert was unsuccessful
