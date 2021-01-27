@@ -15,7 +15,9 @@ INSERT INTO Users_KycTypes (GroupId, TypeName) VALUES (1, 'email'), (2, 'phone_n
 
 INSERT INTO Users_KycStatusTypes (TypeName) VALUES ('unverified'), ('in_progress'), ('verified');
 
-INSERT INTO Users_AclEndPointRules (EndPoint) VALUES ('user__user_account__new_account');
+INSERT INTO Users_AclEndPointRules (EndPoint) VALUES 
+('user__user-account__new-account'),
+('user__user-account__view-kyc-status');
 
 INSERT INTO SpatialEntities_EntityTypes (SpatialEntityTypeName, AdminLevel) VALUES
 ('Country', 0),
