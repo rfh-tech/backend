@@ -32,17 +32,20 @@ class Entity {
         $type = $data["entityType"];
         $parentId = $data["entityParentId"] ?? null;
         $geometry = $data["entityGeometry"] ?? null;
-        $description = $data["description"] ?? null;
+        $description = $data["description"] ?? "";
 
         $inputData = [
             "EntityName"=>QB::wrapString($name, "'"),
             "EntityType"=>QB::wrapString($type, "'"),
-            "EntityParent"=>$parentId,
             "EntityDescription"=>QB::wrapString($description, "'")
         ];
 
+        if (!is_null($parentId)){
+            $inputData["EntityParent"] = $parentId;
+        }
+
         if (!is_null($geometry)){
-            $inputData["EntityGeometry"] = QB::wrapString($geometry);
+            $inputData["EntityGeometry"] = "ST_GeomFromText('$geometry')";
         }
 
         $result = DBQueryFactory::insert("SpatialEntities_Entities", $inputData, false);
@@ -52,5 +55,28 @@ class Entity {
 		}	
 		
 		return $result;
+    }
+
+    public function viewEntitiesByType(array $data){
+        $type = $data["entityType"];
+        $query = "SELECT EntityId, EntityName, EntityType, ST_AsText(EntityGeometry) as EntityGeometry, EntityDescription, DateCreated, LastModified FROM SpatialEntities_Entities WHERE EntityType = $type";
+        $result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    public function viewEntityChildren(array $data){
+        $entity = $data["entityId"];
+        $query = "SELECT EntityId, EntityName, EntityType, ST_AsText(EntityGeometry) as EntityGeometry, EntityDescription, DateCreated, LastModified FROM SpatialEntities_Entities WHERE EntityParent = $entity";
+        $result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    public function viewEntityTypes(){
+        $query = "SELECT * FROM SpatialEntities_EntityTypes;";
+        $result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $result;
     }
 }

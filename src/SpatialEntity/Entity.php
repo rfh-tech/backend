@@ -35,20 +35,22 @@ class Entity {
      * @return array
      */
 	public function newEntity(array $data){
-		$return_result = ["status"=>false, "reason"=>"Invalid data provided"];
-
-		if (isset($data["metadata"])){
-			if (Entity\Entity::newEntity($data)){	
-		        $return_result = ["status"=>false, "reason"=>"Unable to create entity"];			
-				$result = Entity\EntityMetadata::newMetadata($data["metadata"]);
-				if ($result["lastInsertId"]){
-					$return_result = $result;
-				}	
-			}
-		}
+		$return_result = Entity\Entity::newEntity($data);
 
 		return $return_result;
-    }
+	}
+	
+	public function viewEntitiesByType(array $data){
+		return Entity\Entity::viewEntitiesByType($data);
+	}
+	
+	public function viewEntityChildren(array $data){
+		return Entity\Entity::viewEntityChildren($data);
+	}
+	
+	public function viewEntityTypes(){
+		return Entity\Entity::viewEntityTypes();
+	}
     
     public function newMetadata(array $data){
         

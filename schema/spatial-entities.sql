@@ -37,8 +37,10 @@ CREATE TABLE SpatialEntities_Entities (
 	DateCreated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	LastModified DATETIME,
 
+	CONSTRAINT u_Entity_EntityName_EntityType
+		UNIQUE (EntityName, EntityType),
 	CONSTRAINT fk_Entities_SpatialEntities_EntityTypes_SpatialEntityTypeId
-		FOREIGN KEY (EntityId) REFERENCES SpatialEntities_EntityTypes (SpatialEntityTypeId) ON UPDATE CASCADE ON DELETE CASCADE,
+		FOREIGN KEY (EntityType) REFERENCES SpatialEntities_EntityTypes (SpatialEntityTypeId) ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT fk_Entities_SpatialEntities_Entities_SpatialEntities_EntityId
 		FOREIGN KEY (EntityParent) REFERENCES SpatialEntities_Entities (EntityId) ON UPDATE CASCADE ON DELETE SET NULL
 );
