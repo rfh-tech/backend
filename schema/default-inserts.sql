@@ -11,13 +11,11 @@ INSERT INTO Users_AccountTypes (TypeName) VALUES
 
 INSERT INTO Users_KycTypeGroups (GroupName, Priority) VALUES ('level_0', 0), ('level_1', 1), ('level_2', 2);
 
-INSERT INTO Users_KycTypes (GroupId, TypeName) VALUES (1, 'email'), (2, 'phone_number');
+INSERT INTO Users_KycTypes (GroupId, TypeName) VALUES (2, 'email'), (3, 'phone_number');
 
 INSERT INTO Users_KycStatusTypes (TypeName) VALUES ('unverified'), ('in_progress'), ('verified');
 
-INSERT INTO Users_AclEndPointRules (EndPoint) VALUES 
-('user__user-account__new-account'),
-('user__user-account__view-kyc-status');
+INSERT INTO Users_AclEndPointRules (EndPoint) VALUES ('user');
 
 INSERT INTO SpatialEntities_EntityTypes (SpatialEntityTypeName, AdminLevel) VALUES
 ('Country', 0),

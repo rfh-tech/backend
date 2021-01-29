@@ -45,6 +45,7 @@ class UserAccount {
 					$accountId = $result["lastInsertId"];
 					$accountType = $data["accountType"];
 					$setType = UserAccount\AccountType::addAccountType((int)$accountId, (int)$accountType);
+					self::resetKycGroup((int)$accountId);
 
 					$return_result = ["status"=>true, "accountDetails"=>["id"=>$accountId]];
 				}	
@@ -94,7 +95,6 @@ class UserAccount {
 		if ($accountExists && $resourceId !== (int)$data["accountId"]){
 			$result = ["status"=>false, "reason"=>"Unable to link specified user accounts"];
 			$addLink = UserAccount\LinkedAccount::addLinkToAccount($resourceId, (int)$data["accountId"]);
-			
 			if ($addLink["lastInsertId"]){
 				$result = ["status"=>true];
 			}	
@@ -119,7 +119,10 @@ class UserAccount {
 	}
 
 	public function addKyc(int $resourceId, array $data){
-		return UserAccount\UserKyc::addKycStatus($resourceId, $data);
+		$result = UserAccount\UserKyc::addKycStatus($resourceId, $data);
+		self::resetKycGroup($resourceId);
+
+		return $result;
 	}
 
 	public function viewKycStatus(int $resourceId, array $data = []){
@@ -134,6 +137,9 @@ class UserAccount {
 	}
 
 	public function updateKycStatus(int $resourceId, array $data){
-		return UserAccount\UserKyc::updateKycStatus($resourceId, $data);
+		$result = UserAccount\UserKyc::updateKycStatus($resourceId, $data);
+		self::resetKycGroup($resourceId);
+
+		return $result;
 	}
 }

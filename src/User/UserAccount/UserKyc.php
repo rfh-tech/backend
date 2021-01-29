@@ -31,7 +31,7 @@ class UserKyc {
 	protected const KYC_INPROGRESS_STRING = "in_progress";
 
 	public static function getKycStatusTypeName(int $statusTypeId){
-		$query = "SELECT TypeName FROM Users_KycStatusTypes WHERE TypeName = $statusTypeId";
+		$query = "SELECT TypeName FROM Users_KycStatusTypes WHERE TypeId = $statusTypeId";
 		$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
 		if (count($result) == 1){
@@ -42,7 +42,7 @@ class UserKyc {
 	}
 
 	public static function getKycStatusTypeId(string $statusTypeName){
-		$query = "SELECT TypeId FROM Users_KycStatusTypes WHERE TypeId = '$statusTypeName'";
+		$query = "SELECT TypeId FROM Users_KycStatusTypes WHERE TypeName = '$statusTypeName'";
 		$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
 		if (count($result) == 1){
@@ -71,7 +71,7 @@ class UserKyc {
 			"UserId"=>$userId,
 			"KycType"=>$kycType,
 			"KycStatus"=>$kycStatus
-		]);
+		], false);
 
 		return ["UserKycId"=>$result["lastInsertId"]];
 	}
@@ -87,6 +87,13 @@ class UserKyc {
 		return $result;
 	}
 
+	public static function getLowestPriorityGroup(){
+		$query = "SELECT * FROM Users_KycTypeGroups where Priority = 0;";
+		$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+
+		return $result[0] ?? [];
+	}
+
 	public static function determineKycGroup(int $userId){
 		$query = "SELECT * FROM Users_KycTypeGroups a INNER JOIN Users_KycTypes b ON a.GroupId = b.GroupId ORDER BY a.Priority DESC";
 		$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
@@ -96,12 +103,12 @@ class UserKyc {
 		foreach ($result as $key=>$value){
 			$groups[$value["GroupId"]][] = $value["TypeId"];
 		}
-
+		
 		$userGroup = 0;
 		foreach ($groups as $key=>$group){
 			$group = implode(", ", $group);
 			$query = "SELECT COUNT(*) as Total FROM Users_UserKycStatus a INNER JOIN Users_KycStatusTypes b ON a.KycStatus = b.TypeId WHERE a.KycType IN ($group) AND a.UserId = $userId AND b.Typename = ".QB::wrapString(self::KYC_VERIFY_STRING, "'");
-
+			
 			$result = DBConnectionFactory::getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
 			$kycComplete = count($groups[$key]) == $result[0]["Total"];

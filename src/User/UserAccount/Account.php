@@ -81,9 +81,14 @@ class Account {
 	}
 
 	public static function updateKycGroup(int $userId){
-		$currGroup = UserKyc::determineKycGroup($userId)["GroupId"];
-
+		$currGroup = \RFHApi\User\UserAccount\UserKyc::determineKycGroup($userId)["GroupId"];
+		
 		$result = -1;
+
+		if ($currGroup == 0){ //use default KYC Group
+			$defaultGroup = UserKyc::getLowestPriorityGroup();
+			$currGroup = $defaultGroup["GroupId"] ?? 0;
+		}
 
 		if ($currGroup != 0){
 			$query = "UPDATE Users_Account SET KycGroupId = $currGroup, LastModified = CURRENT_TIMESTAMP WHERE UserId = $userId";
