@@ -1,3 +1,6 @@
 [
-	"module__resource__action"
+	"user__user-account__new_account",
+	"public-dataset__world__get-countries",
+	"public-dataset__world__get-states",
+	"public-dataset__world__get-cities"
 ]
