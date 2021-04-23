@@ -25,8 +25,8 @@ use EmmetBlue\Core\Connection\ConnectionAdapter;
  * @since v0.0.1 30/01/2021 10:13
  */
 class World {
-    private function getWorldDBConnection(){
-        $dbPath = dirname(__FILE__)."\bin\world.sqlite";
+    private static function getWorldDBConnection(){
+        $dbPath = dirname(__FILE__)."/bin/world.sqlite";
 
         $dbAdapter = new ConnectionAdapter("SQLite", [$dbPath], "", "");
 
