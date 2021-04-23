@@ -1,6 +1,6 @@
 FROM thecodingmachine/php:7.4-v4-fpm
 USER root
-RUN apt-get update -yq && apt-get install -yq git curl g++ make mysql-srever zip unzip php-zip php7.4-dev php-pear && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -yq && apt-get install -yq git curl g++ make mysql-server zip unzip php-zip php7.4-dev php-pear && rm -rf /var/lib/apt/lists/*
 ADD . /var/www/html/backend
 COPY apache_confs/vhost.conf /etc/apache2/sites-enabled/000-default.conf
 COPY apache_confs/apache2.conf /etc/apache2/apache2.conf
