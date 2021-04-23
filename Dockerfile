@@ -1,4 +1,4 @@
-FROM thecodingmachine/php:7.4-v4-fpm
+FROM thecodingmachine/php:7.4-apache
 USER root
 RUN apt-get update -yq && apt-get install -yq git curl g++ make mysql-server zip unzip php-zip php7.4-dev php-pear && rm -rf /var/lib/apt/lists/*
 ADD . /var/www/html/backend
