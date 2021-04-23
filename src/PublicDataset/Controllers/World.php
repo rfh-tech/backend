@@ -33,14 +33,14 @@ class World {
         return $dbAdapter->getConnection();
     }
 
-	public function getCountries(){
+	public static function getCountries(){
         $query = "SELECT * FROM countries;";
         $result = self::getWorldDBConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
         return $result;
     }
     
-	public function getStates(int $countryId){
+	public static function getStates(int $countryId){
         $query = "SELECT * FROM states where country_id=$countryId;";
         $result = self::getWorldDBConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -48,7 +48,7 @@ class World {
         
     }
     
-	public function getCities(int $stateId){
+	public static function getCities(int $stateId){
         $query = "SELECT * FROM cities where state_id=$stateId;";
         $result = self::getWorldDBConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 

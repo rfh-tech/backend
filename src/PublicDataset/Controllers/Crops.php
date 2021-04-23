@@ -25,7 +25,7 @@ use EmmetBlue\Core\Connection\ConnectionAdapter;
  * @since v0.0.1 30/01/2021 10:13
  */
 class Crops {
-    public function getCrops(){
+    public static function getCrops(){
         $cropsJson = file_get_contents(dirname(__FILE__)."\bin\crops.json");
         $crops = json_decode($cropsJson);
 

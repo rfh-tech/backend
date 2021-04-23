@@ -24,15 +24,15 @@ namespace RFHApi\PublicDataset;
  */
 class World {
     
-	public function getCountries(){
+	public static function getCountries(){
 		return Controllers\World::getCountries();
     }
     
-	public function getStates(int $countryId){
+	public static function getStates(int $countryId){
 		return Controllers\World::getStates($countryId);
     }
     
-	public function getCities(int $stateId){
+	public static function getCities(int $stateId){
 		return Controllers\World::getCities($stateId);
 	}
 }

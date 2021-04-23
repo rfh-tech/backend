@@ -79,7 +79,7 @@ class PermissionGateway implements \EmmetBlueMiddleware\MiddlewareInterface
 			$token = explode(",", $token_string); //token_string format: token,session_id,user_id
 
 			$sessionId = $token[1] ?? 0;
-			$userId = (int)$token[2] ?? 0;
+			$userId = (int)($token[2] ?? 0);
 			$token = $token[0] ?? 0;
 			
 			$endpoint = [$module, $resource, $action];

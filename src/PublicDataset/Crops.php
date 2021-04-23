@@ -23,7 +23,7 @@ namespace RFHApi\PublicDataset;
  * @since v0.0.1 30/01/2021 10:09
  */
 class Crops {
-    public function getCrops(){
+    public static function getCrops(){
         return Controllers\Crops::getCrops();
     }
 }
